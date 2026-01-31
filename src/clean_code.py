@@ -1,17 +1,17 @@
-from .models import Shape
+from .models import Shape, ShapeMetrics
 
 
-def get_area_clean_code(fixtures: list) -> float:
+def area_clean(fixtures: list) -> float:
     area = 0
     for fixture in fixtures:
-        shape: Shape = fixture["shape_type"](fixture["a"], fixture["b"])
-        area += shape.get_area()
+        shape: Shape = fixture["shape"](fixture["a"], fixture["b"])
+        area += shape.area()
     return area
 
 
-def get_complex_things_clean_code(fixtures: list) -> float:
-    complex_things = 0
+def complex_value_clean(fixtures: list) -> float:
+    complex_value = 0
     for fixture in fixtures:
-        shape: Shape = fixture["shape_type"](fixture["a"], fixture["b"])
-        complex_things += shape.get_complex_things()
-    return complex_things
+        shape: Shape = fixture["shape"](fixture["a"], fixture["b"])
+        complex_value += ShapeMetrics.complex_value(shape)
+    return complex_value

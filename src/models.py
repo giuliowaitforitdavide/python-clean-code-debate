@@ -1,67 +1,68 @@
 import math
+from abc import ABC, abstractmethod
 
 
-class Shape:
-    def __init__(self, a: float, b: float) -> None:
-        self.a = a
-        self.b = b
+class Shape(ABC):
+    @abstractmethod
+    def area(self) -> float:
+        pass
 
-    def _get_complex_things(self) -> float:
-        return self.get_area() / (1 + self.get_sides())
-
-    def get_area(self) -> float:
-        raise NotImplementedError()
-
-    def get_sides(self) -> int:
-        raise NotImplementedError()
-
-    def get_complex_things(self) -> float:
-        raise NotImplementedError()
+    @abstractmethod
+    def sides(self) -> int:
+        pass
 
 
 class Rectangle(Shape):
-    def get_area(self) -> float:
-        return self.a * self.b
+    def __init__(self, width: float, height: float, *args: object, **kwargs: object) -> None:
+        self.width = width
+        self.height = height
 
-    def get_sides(self) -> float:
+    def area(self) -> float:
+        return self.width * self.height
+
+    def sides(self) -> int:
         return 4
-
-    def get_complex_things(self) -> float:
-        return super()._get_complex_things()
 
 
 class Square(Shape):
-    def get_area(self) -> float:
-        return self.a * self.b
+    def __init__(self, side: float, *args: object, **kwargs: object) -> None:
+        self.side = side
 
-    def get_sides(self) -> float:
+    def area(self) -> float:
+        return self.side**2
+
+    def sides(self) -> int:
         return 4
-
-    def get_complex_things(self) -> float:
-        return super()._get_complex_things()
 
 
 class Triangle(Shape):
-    def get_area(self) -> float:
-        return 0.5 * self.a * self.b
+    def __init__(self, base: float, height: float, *args: object, **kwargs: object) -> None:
+        self.base = base
+        self.height = height
 
-    def get_sides(self) -> float:
+    def area(self) -> float:
+        return 0.5 * self.base * self.height
+
+    def sides(self) -> int:
         return 3
-
-    def get_complex_things(self) -> float:
-        return super()._get_complex_things()
 
 
 class Circle(Shape):
-    def get_area(self) -> float:
-        return math.pi * self.a * self.b
+    def __init__(self, radius: float, *args: object, **kwargs: object) -> None:
+        self.radius = radius
 
-    def get_sides(self) -> float:
+    def area(self) -> float:
+        return math.pi * self.radius**2
+
+    def sides(self) -> int:
         return 0
 
-    def get_complex_things(self) -> float:
-        return super()._get_complex_things()
+
+class ShapeMetrics:
+    @staticmethod
+    def complex_value(shape: Shape) -> float:
+        return shape.area() / (1 + shape.sides())
 
 
-if __name__ == "__main__":
-    print(Circle(1, 1).get_complex_things())
+ShapeMetrics.complex_value(Circle(5))
+ShapeMetrics.complex_value(Square(4))
