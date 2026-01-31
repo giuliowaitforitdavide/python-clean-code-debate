@@ -1,12 +1,17 @@
 import math
 
-shape_type = {"Rectangle": 1, "Triangle": 0.5, "Square": 1, "Circle": math.pi}
 
-
-def get_area_internals(fixtures: list) -> float:
+def avoid_exposing_internals(fixtures: list) -> float:
     area = 0
+    shape_type = {
+        "Rectangle": 1,
+        "Triangle": 0.5,
+        "Square": 1,
+        "Circle": math.pi,
+    }
+
     for fixture in fixtures:
-        area += shape_type[fixture["shape_type"].__name__] * fixture["a"] * fixture["b"]
+        area += shape_type[fixture["shape"].__name__] * fixture["a"] * fixture["b"]
     return area
 
 
